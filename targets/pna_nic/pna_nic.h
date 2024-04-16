@@ -21,6 +21,8 @@
 #ifndef PNA_NIC_PNA_NIC_H_
 #define PNA_NIC_PNA_NIC_H_
 
+#include <bm/bm_sim/switch.h>
+
 #include "externs/pna_counter.h"
 #include "externs/pna_meter.h"
 #include "externs/pna_random.h"
@@ -32,12 +34,19 @@ namespace bm {
 
 namespace pna {
 
-class PnaNic {
+// TODO: For now we can use switch base class
+// might create NIC
+class PnaNic : public Switch {
  public:
   PnaNic();
 
   ~PnaNic();
 
+  int receive_(port_t port_num, const char *buffer, int len);
+
+  void start_and_return_();
+
+  int init_from_command_line_options(int argc, char* argv[], bm::TargetParserBasic *parser);
 };
 
 }  // namespace bm::pna

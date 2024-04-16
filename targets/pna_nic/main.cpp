@@ -19,15 +19,26 @@
  */
 
 /* NIC instance */
+
 #include "pna_nic.h"
+#include <bm/bm_sim/target_parser.h>
 
 namespace {
 bm::pna::PnaNic *pna_nic;
+bm::TargetParserBasic *pna_nic_parser;
 }  // namespace
 
 int
 main(int argc, char* argv[]) {
-  //using bm::pna;
-  //pna_nic = new PnaNic();
+  using bm::pna::PnaNic;
+  pna_nic = new PnaNic();
+  pna_nic_parser = new bm::TargetParserBasic();
+
+  int status = pna_nic->init_from_command_line_options(
+     argc, argv, pna_nic_parser);
+
+  if(status != 0) std::exit(status);
+
+
   return 0;
 }

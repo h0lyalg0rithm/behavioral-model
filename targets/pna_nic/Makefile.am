@@ -12,7 +12,8 @@ libpnanic_la_SOURCES = \
  externs/pna_meter.h externs/pna_meter.cpp \
  externs/pna_random.h externs/pna_random.cpp \
  externs/pna_internet_checksum.h externs/pna_internet_checksum.cpp \
- externs/pna_hash.h externs/pna_hash.cpp
+ externs/pna_hash.h externs/pna_hash.cpp \
+ externs/pna_crypto_accelerator.h externs/pna_crypto_accelerator.cpp
 
 libpnanic_la_LIBADD = \
 $(top_builddir)/src/bm_sim/libbmsim.la \
@@ -22,6 +23,15 @@ $(top_builddir)/third_party/jsoncpp/libjson.la \
 -lboost_system $(THRIFT_LIB) -lboost_program_options -lboost_filesystem
 
 if COND_THRIFT
+psa_switch_thrift_py_files =
+psa_switch_thrift_files = \
+gen-cpp/bm/pna_nic_constants.cpp \
+gen-cpp/bm/psa_nic_constants.h \
+gen-cpp/bm/PsaSwitch.cpp \
+gen-cpp/bm/PsaSwitch.h \
+gen-cpp/bm/psa_switch_types.cpp \
+gen-cpp/bm/psa_switch_types.h
+
 BUILT_SOURCES =
 
 #pswitchpydir = $(pythondir)/pswitch_runtime
@@ -34,6 +44,12 @@ AM_CPPFLAGS += \
 -I$(builddir)/gen-cpp
 
 bin_PROGRAMS = pna_nic
+
+
+pna_nic_LDADD = \
+$(top_builddir)/src/bm_runtime/libbmruntime.la \
+$(top_builddir)/thrift_src/libruntimestubs.la \
+libpnanic.la
 
 pna_nic_SOURCES = main.cpp
 

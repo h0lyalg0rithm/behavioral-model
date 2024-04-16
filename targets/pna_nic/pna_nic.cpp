@@ -62,7 +62,6 @@ struct bmv2_hash {
 REGISTER_HASH(hash_ex);
 REGISTER_HASH(bmv2_hash);
 
-extern int import_primitives();
 extern int import_counters();
 extern int import_meters();
 extern int import_random();
@@ -74,8 +73,8 @@ namespace bm {
 
 namespace pna {
 
-PnaNic::PnaNic() {
-  import_primitives();
+PnaNic::PnaNic() : Switch(false)
+{
   import_counters();
   import_meters();
   import_random();
@@ -85,6 +84,20 @@ PnaNic::PnaNic() {
 }
 
 PnaNic::~PnaNic() {
+}
+
+int
+PnaNic::receive_(port_t port_num, const char *buffer, int len) {
+  return 0;
+}
+
+void
+PnaNic::start_and_return_(){
+}
+
+int
+PnaNic::init_from_command_line_options(int argc, char* argv[], bm::TargetParserBasic *parser) {
+  return 0;
 }
 
 }  // namespace bm::pna
